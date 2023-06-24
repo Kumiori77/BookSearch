@@ -7,6 +7,32 @@
 
     <h1>BookSearch List Page</h1>
 
+    <table class="table table-striped">
+      <thead>  <!--   머리글   -->
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Author</th>
+        <th scope="col">Price</th>
+        <th scope="col">RegDate</th>
+      </tr>
+      </thead>
+
+      <tbody>  <!-- 내용  -->
+      <!--  thymeleaf 반복문   -->
+      <tr th:each="dto : ${result.dtoList}">
+        <th scope="row">[[${dto.bno}]]</th>
+        <td>[[${dto.title}]]</td>
+        <td>[[${dto.author}]]</td>
+        <td>[[${dto.price}]]</td>
+        <!--    날짜 출력 포멧    -->
+        <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
+      </tr>
+
+      </tbody>
+
+    </table>
+
 
   </th:block>
 

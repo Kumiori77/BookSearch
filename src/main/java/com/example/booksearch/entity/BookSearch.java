@@ -27,4 +27,13 @@ public class BookSearch extends BaseEntity {
     @Column(nullable = false)
     private Long price;
 
+    // setter
+
+    public void changeTitle(String title) {
+        this.title = title;
+    }
+    public void changePrice(Long price) {
+        this.price = price;
+    }
+
 }
