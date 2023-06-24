@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
 <th:block th:replace="~{/layout/layout :: setContent(~{this :: content})}">
 
   <th:block th:fragment="content">
 
-    <h1>BookSearch List Page</h1>
+    <h1>BookSearch List Page
+    <a th:href="@{/booksearch/register}">
+      <button type="button" class="btn btn-outline-primary">REGISTER</button>
+    </a></h1>
 
     <table class="table table-striped">
       <thead>  <!--   머리글   -->
@@ -21,7 +26,9 @@
       <tbody>  <!-- 내용  -->
       <!--  thymeleaf 반복문   -->
       <tr th:each="dto : ${result.dtoList}">
-        <th scope="row">[[${dto.bno}]]</th>
+        <th scope="row">
+          <a th:href="@{/booksearch/read(bno=${dto.bno}, page=${result.page})}">[[${dto.bno}]]
+          </a></th>
         <td>[[${dto.title}]]</td>
         <td>[[${dto.author}]]</td>
         <td>[[${dto.price}]]</td>
@@ -56,8 +63,42 @@
     </ul>
 
 
+
+    <div class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">New Book! [[${msg}]]</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Registed new Book!</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+            onclick="$('.modal').hide()">CONFIRM</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
   </th:block>
 
 </th:block>
+
+
+<script th:inline="javascript">
+  var msg = [[${msg}]];
+  console.log(msg);
+
+  if(msg){
+    $(".modal").show();
+  }
+
+</script>
 
 </html>

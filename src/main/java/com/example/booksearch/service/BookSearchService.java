@@ -11,6 +11,11 @@ public interface BookSearchService {
 
     PageResultDTO<BookSearchDTO, BookSearch> getList(PageRequestDTO requestDTO);
 
+    BookSearchDTO read(Long bno);
+
+    void remove(Long bno);
+    void modify(BookSearchDTO dto);
+
     default BookSearch dtoToEntity(BookSearchDTO dto) {
         BookSearch entity = BookSearch.builder()
                 .bno(dto.getBno())

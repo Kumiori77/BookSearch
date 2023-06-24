@@ -32,8 +32,8 @@ public class BookSearch extends BaseEntity {
     public void changeTitle(String title) {
         this.title = title;
     }
-    public void changePrice(Long price) {
-        this.price = price;
-    }
+    public void changePrice(Long price) {this.price = price; }
+    public void changeAuthor(String author) { this.author = author;}
+    public void changePublisher(String publisher) { this.publisher = publisher;}
 
 }

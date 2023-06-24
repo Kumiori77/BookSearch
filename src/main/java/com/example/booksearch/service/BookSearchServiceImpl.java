@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.function.Function;
 
 @Service
@@ -40,5 +41,35 @@ public class BookSearchServiceImpl implements BookSearchService {
         Function<BookSearch, BookSearchDTO> fn = (entity -> entityToDto(entity));
 
         return new PageResultDTO<>(result, fn);
+    }
+
+    @Override
+    public BookSearchDTO read(Long bno) {
+        Optional<BookSearch> result = repository.findById(bno);
+
+        return result.isPresent() ? entityToDto(result.get()) : null;
+    }
+
+    @Override
+    public void remove(Long bno) {
+        repository.deleteById(bno);
+    }
+
+    @Override
+    public void modify(BookSearchDTO dto) {
+
+        Optional<BookSearch> result = repository.findById(dto.getBno());
+
+        if (result.isPresent()) {
+            BookSearch entity = result.get();
+
+            entity.changeTitle(dto.getTitle());
+            entity.changeAuthor(dto.getAuthor());
+            entity.changePublisher(dto.getPublisher());
+            entity.changePrice(dto.getPrice());
+
+            repository.save(entity);
+        }
+
     }
 }
