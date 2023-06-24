@@ -33,6 +33,28 @@
 
     </table>
 
+    <ul class="pagination h-100 justify-content-center align-items-center">
+
+      <!--  이전 링크    -->
+      <li class="page-item" th:if="${result.prev}">
+        <a class="page-link" th:href="@{/booksearch/list(page=${result.start-1})}"
+           tabindex="-1">Previous</a>
+      </li>
+
+      <!--  페이지 번호   -->
+      <li th:class="'page-item ' + ${result.page == page ? 'active' : ''}"
+          th:each="page: ${result.pageList}">
+        <a class="page-link" th:href="@{/booksearch/list(page=${page})}"
+           tabindex="-1">[[${page}]]</a>
+      </li>
+
+      <!--  다음 링크    -->
+      <li class="page-item" th:if="${result.next}">
+        <a class="page-link" th:href="@{/booksearch/list(page=${result.end+1})}">Next</a>
+      </li>
+
+    </ul>
+
 
   </th:block>
 
