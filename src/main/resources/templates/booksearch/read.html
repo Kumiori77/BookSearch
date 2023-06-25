@@ -48,10 +48,12 @@
 
 
       <br>
-      <a th:href="@{/booksearch/modify(bno=${dto.bno}, page=${requestDTO.page})}">
+      <a th:href="@{/booksearch/modify(bno=${dto.bno}, page=${requestDTO.page},
+      type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
       <Button type="button" class="btn btn-outline-primary">Modify</Button></a>
 
-      <a th:href="@{/booksearch/list(page = ${requestDTO.page})}">
+      <a th:href="@{/booksearch/list(page = ${requestDTO.page},
+      type=${requestDTO.type}, keyword=${requestDTO.keyword})}">
         <Button type="button" class="btn btn-info">List</Button>
       </a>
 

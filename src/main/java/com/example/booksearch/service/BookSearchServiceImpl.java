@@ -4,7 +4,10 @@ import com.example.booksearch.dto.BookSearchDTO;
 import com.example.booksearch.dto.PageRequestDTO;
 import com.example.booksearch.dto.PageResultDTO;
 import com.example.booksearch.entity.BookSearch;
+import com.example.booksearch.entity.QBookSearch;
 import com.example.booksearch.repository.BookSearchRepository;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -36,7 +39,9 @@ public class BookSearchServiceImpl implements BookSearchService {
 
         Pageable pageable = requestDTO.getPageable(Sort.by("bno").descending());
 
-        Page<BookSearch> result = repository.findAll(pageable);
+        BooleanBuilder booleanBuilder = getSearch(requestDTO);
+
+        Page<BookSearch> result = repository.findAll(booleanBuilder, pageable);
 
         Function<BookSearch, BookSearchDTO> fn = (entity -> entityToDto(entity));
 
@@ -72,4 +77,37 @@ public class BookSearchServiceImpl implements BookSearchService {
         }
 
     }
+
+    @Override
+    public BooleanBuilder getSearch(PageRequestDTO pageRequestDTO) {
+        String type = pageRequestDTO.getType();
+        String keyword = pageRequestDTO.getKeyword();
+
+        BooleanBuilder booleanBuilder = new BooleanBuilder();
+
+        QBookSearch qGuestbook = QBookSearch.bookSearch;
+
+        BooleanExpression expression = qGuestbook.bno.gt(0L);  // gno > 0
+        booleanBuilder.and(expression);
+
+        if (type == null || type.trim().length() == 0) { // 검색조건을 선택하지 않은 경우
+            return booleanBuilder;
+        }
+
+        // 검색 조건 작성
+        BooleanBuilder conditionBuilder = new BooleanBuilder();
+        if (type.contains("t")) {
+            conditionBuilder.or(qGuestbook.title.contains(keyword));
+        }
+        else if (type.contains("a")) {
+            conditionBuilder.or(qGuestbook.author.contains(keyword));
+        }
+        else if (type.contains("p")) {
+            conditionBuilder.or(qGuestbook.publisher.contains(keyword));
+        }
+
+        // 조건 통합
+        booleanBuilder.and(conditionBuilder);
+
+        return booleanBuilder;    }
 }

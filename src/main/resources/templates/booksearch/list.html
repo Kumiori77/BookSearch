@@ -12,6 +12,51 @@
       <button type="button" class="btn btn-outline-primary">REGISTER</button>
     </a></h1>
 
+
+    <form action="/booksearch/list" method="get" id="searchForm">
+
+      <div class="input-group">
+
+        <input type="hidden" name="page" value="1">
+
+        <div class="input-group-sm">
+
+          <select class="form-select" name="type">
+            <option th:selected="${pageRequestDTO.type == null}">------</option>
+
+            <option value="t" th:selected="${pageRequestDTO.type == 't'}">
+              제목</option>
+
+            <option value="c" th:selected="${pageRequestDTO.type == 'a'}">
+              작가</option>
+
+            <option value="w" th:selected="${pageRequestDTO.type == 'p'}">
+              출판사</option>
+
+            <option value="tc" th:selected="${pageRequestDTO.type == 'ta'}">
+              제목 + 작가</option>
+
+            <option value="tcw" th:selected="${pageRequestDTO.type == 'tap'}">
+              제목 + 작가 + 출판사</option>
+          </select>
+
+        </div>
+
+        <input class="form-control-sm" name="keyword"
+               th:value="${pageRequestDTO.keyword}">
+
+        <div class="input-group-sm" id="button-addon4">
+          <button class="btn btn-outline-secondary btn-search" type="button">
+            Search</button>
+          <button class="btn btn-outline-secondary btn-clear" type="button">
+            Clear</button>
+        </div>
+
+      </div>
+
+    </form>
+
+
     <table class="table table-striped">
       <thead>  <!--   머리글   -->
       <tr>
@@ -27,7 +72,8 @@
       <!--  thymeleaf 반복문   -->
       <tr th:each="dto : ${result.dtoList}">
         <th scope="row">
-          <a th:href="@{/booksearch/read(bno=${dto.bno}, page=${result.page})}">[[${dto.bno}]]
+          <a th:href="@{/booksearch/read(bno=${dto.bno}, page=${result.page},
+          type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">[[${dto.bno}]]
           </a></th>
         <td>[[${dto.title}]]</td>
         <td>[[${dto.author}]]</td>
@@ -51,8 +97,9 @@
       <!--  페이지 번호   -->
       <li th:class="'page-item ' + ${result.page == page ? 'active' : ''}"
           th:each="page: ${result.pageList}">
-        <a class="page-link" th:href="@{/booksearch/list(page=${page})}"
-           tabindex="-1">[[${page}]]</a>
+        <a class="page-link" th:href="@{/booksearch/list(page=${page},
+        type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
+          [[${page}]]</a>
       </li>
 
       <!--  다음 링크    -->
@@ -98,6 +145,16 @@
   if(msg){
     $(".modal").show();
   }
+
+  var searchForm = $("#searchForm");
+
+  $('.btn-search').click(function(e){
+    searchForm.submit();
+  });
+
+  $('.btn-clear').click(function(e){
+    searchForm.empty().submit();
+  });
 
 </script>
 

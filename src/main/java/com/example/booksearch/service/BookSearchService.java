@@ -4,6 +4,7 @@ import com.example.booksearch.dto.BookSearchDTO;
 import com.example.booksearch.dto.PageRequestDTO;
 import com.example.booksearch.dto.PageResultDTO;
 import com.example.booksearch.entity.BookSearch;
+import com.querydsl.core.BooleanBuilder;
 
 public interface BookSearchService {
 
@@ -15,6 +16,8 @@ public interface BookSearchService {
 
     void remove(Long bno);
     void modify(BookSearchDTO dto);
+
+    BooleanBuilder getSearch(PageRequestDTO pageRequestDTO);
 
     default BookSearch dtoToEntity(BookSearchDTO dto) {
         BookSearch entity = BookSearch.builder()

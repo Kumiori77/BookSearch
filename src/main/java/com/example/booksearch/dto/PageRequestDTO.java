@@ -15,6 +15,9 @@ public class PageRequestDTO {
     private int page; // 패이지 번호
     private int size; // 패이지당 글의 수
 
+    private String type;
+    private String keyword;
+
     public PageRequestDTO() {
         this.page = 1;
         this.size = 10;
