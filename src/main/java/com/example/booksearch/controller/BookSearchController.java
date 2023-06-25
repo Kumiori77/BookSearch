@@ -53,4 +53,27 @@ public class BookSearchController {
         model.addAttribute("dto", dto);
     }
 
+    @PostMapping("remove")
+    public String remove(Long bno, RedirectAttributes redirectAttributes) {
+
+        service.remove(bno);
+
+        redirectAttributes.addFlashAttribute("msg", bno);
+
+        return "redirect:/booksearch/list";
+
+    }
+
+    @PostMapping("/modify")
+    public String modify(BookSearchDTO dto, @ModelAttribute("requestDTO")
+    PageRequestDTO requestDTO, RedirectAttributes redirectAttributes) {
+
+        service.modify(dto);
+
+        redirectAttributes.addAttribute("page", requestDTO.getPage());
+        redirectAttributes.addAttribute("bno", dto.getBno());
+
+        return "redirect:/booksearch/read";
+    }
+
 }
