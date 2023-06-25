@@ -41,7 +41,8 @@ public class BookSearchController {
 
         Long bno = service.register(dto);
 
-        redirectAttributes.addFlashAttribute("msg", bno);
+        redirectAttributes.addFlashAttribute("bno", bno);
+        redirectAttributes.addFlashAttribute("msg", "Registed new Book!!");
 
         return "redirect:/booksearch/list";
     }
@@ -58,7 +59,8 @@ public class BookSearchController {
 
         service.remove(bno);
 
-        redirectAttributes.addFlashAttribute("msg", bno);
+        redirectAttributes.addFlashAttribute("bno", bno);
+        redirectAttributes.addFlashAttribute("msg", "Book Removed!");
 
         return "redirect:/booksearch/list";
 
