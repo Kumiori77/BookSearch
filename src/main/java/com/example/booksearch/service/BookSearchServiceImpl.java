@@ -37,7 +37,9 @@ public class BookSearchServiceImpl implements BookSearchService {
     @Override
     public PageResultDTO<BookSearchDTO, BookSearch> getList(PageRequestDTO requestDTO) {
 
-        Pageable pageable = requestDTO.getPageable(Sort.by("bno").descending());
+        Sort sort = getSorting(requestDTO);
+
+        Pageable pageable = requestDTO.getPageable(sort);
 
         BooleanBuilder booleanBuilder = getSearch(requestDTO);
 
@@ -110,4 +112,44 @@ public class BookSearchServiceImpl implements BookSearchService {
         booleanBuilder.and(conditionBuilder);
 
         return booleanBuilder;    }
+
+    @Override
+    public Sort getSorting(PageRequestDTO pageRequestDTO) {
+
+        Sort sort;
+        String sortingKeyword = pageRequestDTO.getSorting();
+
+        if (sortingKeyword == null) {
+            sort = Sort.by("bno").descending();
+            return sort;
+        }
+
+        if (sortingKeyword.contains("t")) {
+            sort = Sort.by("title");
+        }
+        else if (sortingKeyword.contains("a")) {
+            sort = Sort.by("author");
+        }
+        else if (sortingKeyword.contains("p")) {
+            sort = Sort.by("publisher");
+        }
+        else if (sortingKeyword.contains("r")) {
+            sort = Sort.by("price");
+        }
+        else {
+            sort = Sort.by("bno");
+        }
+
+        if (sortingKeyword.contains("A")) {
+            sort = sort.ascending();
+        }
+        else {
+            sort = sort.descending();
+        }
+
+
+        return sort;
+    }
+
+
 }

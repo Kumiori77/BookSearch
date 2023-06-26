@@ -5,6 +5,7 @@ import com.example.booksearch.dto.PageRequestDTO;
 import com.example.booksearch.dto.PageResultDTO;
 import com.example.booksearch.entity.BookSearch;
 import com.querydsl.core.BooleanBuilder;
+import org.springframework.data.domain.Sort;
 
 public interface BookSearchService {
 
@@ -18,6 +19,8 @@ public interface BookSearchService {
     void modify(BookSearchDTO dto);
 
     BooleanBuilder getSearch(PageRequestDTO pageRequestDTO);
+
+    Sort getSorting(PageRequestDTO pageRequestDTO);
 
     default BookSearch dtoToEntity(BookSearchDTO dto) {
         BookSearch entity = BookSearch.builder()
