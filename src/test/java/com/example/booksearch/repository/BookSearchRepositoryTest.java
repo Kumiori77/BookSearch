@@ -31,7 +31,7 @@ public class BookSearchRepositoryTest {
 
     @Test
     public void insertDummies() {
-        IntStream.rangeClosed(1, 15).forEach(i -> {
+        IntStream.rangeClosed(1, 300).forEach(i -> {
             BookSearch bookSearch = BookSearch.builder()
                     .title("Title  :"+i)
                     .author("Athor : User"+(i%10))

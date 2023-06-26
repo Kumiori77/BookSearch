@@ -42,7 +42,8 @@ public class BookSearchController {
         Long bno = service.register(dto);
 
         redirectAttributes.addFlashAttribute("bno", bno);
-        redirectAttributes.addFlashAttribute("msg", "Registed new Book!!");
+        redirectAttributes.addFlashAttribute("title", "Registed new Book!!");
+        redirectAttributes.addFlashAttribute("msg", "새로운 책이 등록되었습니다.");
 
         return "redirect:/booksearch/list";
     }
@@ -60,13 +61,14 @@ public class BookSearchController {
         service.remove(bno);
 
         redirectAttributes.addFlashAttribute("bno", bno);
-        redirectAttributes.addFlashAttribute("msg", "Book Removed!");
+        redirectAttributes.addFlashAttribute("title", "Book Removed!");
+        redirectAttributes.addFlashAttribute("msg", "책이 삭제되었습니다.");
 
         return "redirect:/booksearch/list";
 
     }
 
-    @PostMapping("/modify")
+    @PostMapping("modify")
     public String modify(BookSearchDTO dto, @ModelAttribute("requestDTO")
     PageRequestDTO requestDTO, RedirectAttributes redirectAttributes) {
 
@@ -74,6 +76,8 @@ public class BookSearchController {
 
         redirectAttributes.addAttribute("page", requestDTO.getPage());
         redirectAttributes.addAttribute("bno", dto.getBno());
+        redirectAttributes.addFlashAttribute("modalTitle", "Book Modified!");
+        redirectAttributes.addFlashAttribute("modalMsg", "책 정보가 수정되었습니다.");
 
         redirectAttributes.addAttribute("type", requestDTO.getType());
         redirectAttributes.addAttribute("keyword", requestDTO.getKeyword());
