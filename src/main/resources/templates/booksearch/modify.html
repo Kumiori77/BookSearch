@@ -14,6 +14,7 @@
       <input type="hidden" name="page" th:value="${requestDTO.page}">
       <input type="hidden" name="type" th:value="${requestDTO.type}">
       <input type="hidden" name="keyword" th:value="${requestDTO.keyword}">
+      <input type="hidden" name="sorting" th:value="${requestDTO.sorting}">
 
       <div class="form-grop">
         <label>Bno</label>
@@ -88,11 +89,13 @@
         var pageInfo = $("input[name='page']");
         var type = $("input[name='type']");
         var keyword = $("input[name='keyword']");
+        var sorting = $("input[name='sorting']");
 
         actionForm.empty();
         actionForm.append(pageInfo);
         actionForm.append(type);
         actionForm.append(keyword);
+        actionForm.append(sorting);
 
         actionForm.attr("action", "/booksearch/list")
                 .attr("method", "get");

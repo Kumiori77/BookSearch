@@ -81,6 +81,7 @@ public class BookSearchController {
 
         redirectAttributes.addAttribute("type", requestDTO.getType());
         redirectAttributes.addAttribute("keyword", requestDTO.getKeyword());
+        redirectAttributes.addAttribute("sorting", requestDTO.getSorting());
 
         return "redirect:/booksearch/read";
     }

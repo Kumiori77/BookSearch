@@ -33,10 +33,10 @@ public class BookSearchRepositoryTest {
     public void insertDummies() {
         IntStream.rangeClosed(1, 300).forEach(i -> {
             BookSearch bookSearch = BookSearch.builder()
-                    .title("Title  :"+i)
-                    .author("Athor : User"+(i%10))
-                    .publisher("Publisher : PUB"+(i%5))
-                    .price((i * 1000L)).build();
+                    .title("Title.."+i)
+                    .author("User"+(i%10))
+                    .publisher("PUB"+(i%5))
+                    .price((10000L + ((i%10) * 1000L))).build();
 
             System.out.println(repository.save(bookSearch));
         });
